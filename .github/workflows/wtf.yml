@@ -1,0 +1,25 @@
+name: WTF
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  create-github-release:
+    name: Create GitHub release 🐙
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create draft release 🐙
+        run: >-
+          gh release create
+          --verify-tag
+          --draft
+          --repo ${{ github.repository }}
+          --title ${{ github.ref_name }}
+          v0.1.2
+        env:
+          GH_DEBUG: api
+          GH_TOKEN: ${{ github.token }}
